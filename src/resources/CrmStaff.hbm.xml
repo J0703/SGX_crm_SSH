@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.lanou.domain.CrmStaff" table="crm_staff" schema="crm">
+        <id name="staffId">
+            <column name="staffId" sql-type="varchar(255)"/>
+            <generator class="uuid"/>
+        </id>
+        <property name="loginName">
+            <column name="loginName" sql-type="varchar(100)" length="100" />
+        </property>
+        <property name="loginPwd">
+            <column name="loginPwd" sql-type="varchar(100)" length="100" />
+        </property>
+        <property name="staffName">
+            <column name="staffName" sql-type="varchar(100)" length="100" />
+        </property>
+        <property name="gender">
+            <column name="gender" sql-type="varchar(20)" length="20"/>
+        </property>
+        <property name="onDutyDate">
+            <column name="onDutyDate" sql-type="datetime" />
+        </property>
+        
+        <many-to-one name="crmPost" class="com.lanou.domain.CrmPost" column="postId"/>
+    </class>
+</hibernate-mapping>

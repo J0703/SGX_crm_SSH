@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.objectFactory" value="spring"/>
+
+  <package name="staff" extends="json-default">
+     <!--登录-->
+      <action name="homeAction" class="crmStaffAction">
+          <result>/pages/frame.jsp</result>
+      </action>
+      <action name="login" class="crmStaffAction" method="login">
+          <result name="input" >/pages/login.jsp</result>
+          <result name="login">/pages/login.jsp</result>
+          <result name="success" type="redirectAction">homeAction</result>
+      </action>
+
+      <!--重新登录-->
+      <action name="staffAction_logout" class="crmStaffAction" method="staffAction_logout">
+          <result name="success" type="redirectAction">login</result>
+      </action>
+
+
+      <!--员工管理页面-->
+      <action name="listStaff" class="crmStaffAction" method="findAllList">
+          <result name="success">/pages/staff/listStaff.jsp</result>
+      </action>
+      <!--员工编辑前 id查回显 -->
+      <action name="editStaff" class="crmStaffAction" method="editStaff">
+          <result name="success">/pages/staff/editStaff.jsp</result>
+      </action>
+      <!--员工编辑-->
+      <action name="editReal" class="crmStaffAction" method="editReal">
+          <result name="success" type="redirectAction">listStaff</result>
+      </action>
+
+      <!--员工添加跳 -->
+      <action name="addStaff" class="crmStaffAction">
+          <result name="success">/pages/staff/addStaff.jsp</result>
+      </action>
+      <!--添加员工-->
+      <action name="addStaffReal" class="crmStaffAction" method="addStaffReal">
+          <result name="success" type="redirectAction">listStaff</result>
+      </action>
+
+  </package>
+
+</struts>
