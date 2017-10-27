@@ -11,4 +11,6 @@ import java.util.List;
 public interface CrmStaffDao extends BaseDao<CrmStaff> {
     //登录
     CrmStaff login(String loginName, String loginPwd);
+
+    List<CrmStaff> finBypostId(String postId);
 }

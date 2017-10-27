@@ -33,6 +33,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
         return t;
     }
 
+
     @Override
     public void delete(T t) {
       this.getHibernateTemplate().delete(t);
@@ -51,6 +52,14 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 
     @Override
     public void saveOrUpdate(T t) {
+
       this.getHibernateTemplate().saveOrUpdate(t);
     }
+
+    @Override
+    public List<T> findAll(String condition, Object... params) {
+        String hql = "from " + tClass.getName() + " where 1=1 " + condition;
+        return (List<T>) this.getHibernateTemplate().find(hql , params);
+    }
+
 }

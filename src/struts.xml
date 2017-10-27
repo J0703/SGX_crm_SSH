@@ -47,6 +47,27 @@
           <result name="success" type="redirectAction">listStaff</result>
       </action>
 
+      <!--二级联动-->
+      <action name="findStaff" class="crmStaffAction" method="findStaff">
+          <result name="success"  >/pages/staff/listStaff.jsp</result>
+      </action>
+      <action name="findPost" class="crmStaffAction" method="findPost">
+          <result name="success" type="json">
+              <param name="root">posts</param>
+          </result>
+      </action>
   </package>
+  <!--职务-->
+    <package name="post" extends="json-default">
+        <action name="listPost" class="crmPostAction" method="listPost">
+            <result name="success">/pages/post/listPost.jsp</result>
+        </action>
+    </package>
+<!--部门-->
+    <package name="department" extends="json-default">
+        <action name="listDepartment" class="crmDepartmentAction" method="listDepartment">
+            <result name="success">/pages/department/listDepartment.jsp</result>
+        </action>
+    </package>
 
 </struts>

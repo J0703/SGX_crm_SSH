@@ -25,6 +25,6 @@
             <column name="onDutyDate" sql-type="datetime" />
         </property>
         
-        <many-to-one name="crmPost" class="com.lanou.domain.CrmPost" column="postId"/>
+        <many-to-one name="crmPost" class="com.lanou.domain.CrmPost" column="postId" lazy="false" />
     </class>
 </hibernate-mapping>

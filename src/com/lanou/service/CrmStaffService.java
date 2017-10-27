@@ -19,4 +19,8 @@ public interface CrmStaffService {
     void addStaffReal(CrmStaff crmStaff);
 
     CrmStaff login(CrmStaff crmStaff);
+
+//    List<CrmStaff> findBypostId(String postId);
+
+    List<CrmStaff> findAll(CrmStaff crmStaff);
 }

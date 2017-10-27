@@ -12,14 +12,15 @@ public class CrmPost {
     private String postId;
     private String postName;
 
-    private Set<CrmStaff> crmStaffs = new HashSet<>();
 
-    public Set<CrmStaff> getCrmStaffs() {
-        return crmStaffs;
+    private CrmDepartment crmDepartment;
+
+    public CrmDepartment getCrmDepartment() {
+        return crmDepartment;
     }
 
-    public void setCrmStaffs(Set<CrmStaff> crmStaffs) {
-        this.crmStaffs = crmStaffs;
+    public void setCrmDepartment(CrmDepartment crmDepartment) {
+        this.crmDepartment = crmDepartment;
     }
 
     public String getPostId() {

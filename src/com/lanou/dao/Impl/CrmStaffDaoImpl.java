@@ -20,4 +20,10 @@ public class CrmStaffDaoImpl extends BaseDaoImpl<CrmStaff> implements CrmStaffDa
         }
         return null;
     }
+
+    @Override
+    public List<CrmStaff> finBypostId(String postId) {
+        List<CrmStaff> crmStaffs = (List<CrmStaff>) this.getHibernateTemplate().find("from CrmStaff where postId =?", postId);
+        return crmStaffs;
+    }
 }

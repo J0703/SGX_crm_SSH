@@ -34,30 +34,48 @@
     <td width="3%" align="right"><img src="${pageContext.request.contextPath}/images/tright.gif"/></td>
   </tr>
 </table>
-
+ <%--session.setAttribute("crmStaffs",crmStaffs);--%>
+ <%--session.setAttribute("crmDepartments",crmDepartments);--%>
+ <%--session.setAttribute("crmPosts",crmPosts);--%>
 <!-- 查询条件：马上查询 -->
-<form id="conditionFormId" action="${pageContext.request.contextPath}/staff/staffAction_findAll" method="post">
+<form id="conditionFormId" action="${pageContext.request.contextPath}/findStaff.action" method="post">
 	<table width="88%" border="0" style="margin: 20px;" >
 	  <tr>
 	    <td width="80px">部门：</td>
 	    <td width="200px">
-	    	
-	    	<select name="crmPost.crmDepartment.depId" onchange="changePost(this)">
-			    <option value="">--请选择部门--</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000001">教学部</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>
-			</select>
+
+			<s:select list="#session.crmDepartments"
+					  name="crmPost.crmDepartment.depId"
+					  listKey="depId" listValue="depName"
+					  headerKey="" headerValue="--请选择部门--"
+					  onchange="showPost(this)"
+			>
+			</s:select>
+	    	<%--<select id="depart" name="crmPost.crmDepartment.depId" onchange="showPost(this)">--%>
+			    <%--<option value="-1">--请选择部门--</option>--%>
+				<%--<s:iterator value="#session.crmDepartments" var="depart">--%>
+					<%--<option value="${depart.depId}">${depart.depName}</option>--%>
+				<%--</s:iterator>--%>
+			    <%--&lt;%&ndash;<option value="ee050687bd1a4455a153d7bbb7000001">教学部</option>&ndash;%&gt;--%>
+			    <%--&lt;%&ndash;<option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>&ndash;%&gt;--%>
+			<%--</select>--%>
 
 	    </td>
 	    <td width="80px" >职务：</td>
 	    <td width="200px" >
-	    	
-	    	<select name="crmPost.postId" id="postSelectId">
-			    <option value="">--请选择职务--</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000003">总监</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000004">讲师</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000005">主管</option>
-			</select>
+			<s:select id="post" list="#session.crmPosts"
+					  name="crmPost.postId"
+					  listKey="postId" listValue="postName"
+					  headerKey="" headerValue="--请选择职务--"
+			>
+			</s:select>
+
+	    	<%--<select id="post" name="crmPost.postId" >--%>
+			    <%--<option value="-1">--请选择职务--</option>--%>
+			    <%--&lt;%&ndash;<option value="ee050687bd1a4455a153d7bbb7000003">总监</option>&ndash;%&gt;--%>
+			    <%--&lt;%&ndash;<option value="ee050687bd1a4455a153d7bbb7000004">讲师</option>&ndash;%&gt;--%>
+			    <%--&lt;%&ndash;<option value="ee050687bd1a4455a153d7bbb7000005">主管</option>&ndash;%&gt;--%>
+			<%--</select>--%>
 
 	    </td>
 	    <td width="80px">姓名：</td>
@@ -84,13 +102,13 @@
     <td width="10%" align="center">编辑</td>
   </tr>
 
-	<s:iterator value="#session.crmStaffs">
+	<s:iterator value="#session.crmStaffs1">
 		<tr class="tabtd1">
 			<td align="center"><s:property value="staffName"/> </td>
 			<td align="center"><s:property value="gender"/> </td>
 			<td align="center"><s:property value="onDutyDate" /> </td>
-			<td align="center"><s:property value="666"/> </td>
-			<td align="center"><s:property value="777"/> </td>
+			<td align="center"><s:property value="crmPost.crmDepartment.depName"/> </td>
+			<td align="center"><s:property value="crmPost.postName"/> </td>
 			<td width="7%" align="center">
              <%--staffId 就是当前点击编辑的员工id--%>
 				<s:a href="editStaff.action?staffId=%{staffId}"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></s:a>
@@ -144,4 +162,69 @@
 </table>
 --%>
 </body>
+
+
+<script type="text/javascript">
+    function condition() {
+        document.getElementById("conditionFormId").submit();
+
+    }
+    function createXMLHttpRequest() {
+        try {
+            return new XMLHttpRequest();
+        } catch (e) {
+            try {
+                return new ActiveXObject("Msxml2.HTTP");
+            } catch (e) {
+                try {
+                    return new ActiveXObject("Microsoft.HTTP");
+                } catch (e) {
+                    throw e;
+                }
+            }
+        }
+    }
+    //根据部门选中状态发起职务查询的请求
+    function showPost(obj) {
+        //获得部门选中id
+        var departId = obj.value;
+        //1.创建ajax请求对象
+        var httpRequest = createXMLHttpRequest();
+
+        var url = "${pageContext.request.contextPath}/findPost.action";
+        //2.打开一个url连接对象
+        httpRequest.open("POST",url,true)
+        //3.POST请求设置请求头
+        httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        //4.发起请求 设置请求参数 部门id
+        httpRequest.send("departId="+departId);
+        //5.设置请求响应的监听器
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 &&httpRequest.status==200){
+                //6,成功响应 处理响应结果
+                //6.1将响应数据转换为json格式解析
+                var jsonData = eval("("+httpRequest.responseText+")");
+                //6.2 根据组件id获得职务下拉列表对象
+                var postSelect = document.getElementById("post");
+                //6.3 添加请选择
+                postSelect.innerHTML="<option value='-1'>---请选择---</option>";
+                //6.4 遍历json数据集合,添加下拉选项
+                for (var i=0; i<jsonData.length;i++){
+                    var id = jsonData[i].postId;//职务id
+                    var pname = jsonData[i].postName;
+//                    alert(id + pname)
+                    postSelect.innerHTML +="<option value='"+id+"'>"+pname+"</option>";
+
+                }
+
+
+            }
+
+        }
+
+
+
+
+    }
+</script>
 </html>

@@ -12,5 +12,7 @@
         <property name="postName">
             <column name="postName" sql-type="varchar(100)" length="100" />
         </property>
+
+        <many-to-one name="crmDepartment" class="com.lanou.domain.CrmDepartment" column="depId"  lazy="false" />
     </class>
 </hibernate-mapping>

@@ -33,15 +33,16 @@
     <td width="3%" align="right"><img src="${pageContext.request.contextPath}/images/tright.gif"/></td>
   </tr>
 </table>
-
+<%--"crmDepartments",crmDepartments);--%>
+<%--session.setAttribute("crmPosts"--%>
 <s:form action="editReal" method="POST">
 	<s:hidden name="staffId" value="%{staffId}"/>
 	<s:textfield name="loginName" label="登录名"/>
 	<s:textfield name="staffName" label="姓名"/>
-	<s:password name="loginPwd" label="密码"/>
-	<s:radio name="gender" list="%{#{'man':'男','woman':'女'}}" value="'man'"/>
-	<%--<s:select list="%{#session.allDepartment}" value="%{depId}" name="crmStaffEntity.crmPostEntity.crmDepartmentEntity.depId" listKey="%{depId}" listValue="%{depName}" label="所属部门"/>--%>
-	<%--<s:select list="%{#session.allPost}" value="%{postId}" name="crmStaffEntity.crmPostEntity.postId" listKey="%{postId}" listValue="%{postName}" label="职务"/>--%>
+	<s:password name="loginPwd" label="密码"  showPassword="true"/>
+	<s:radio name="gender" list="%{#{'man':'男','woman':'女'}}" />
+	<s:select list="#session.crmDepartments"  onchange="showPost(this)" name="crmPost.crmDepartment.depId" listKey="depId" listValue="depName" label="所属部门"/>
+	<s:select list="#session.crmPosts" id="post" name="crmPost.postId" listKey="%{postId}" listValue="%{postName}" label="职务"/>
      <s:textfield label="入职时间" name="onDutyDate" readonly="true" onfocus="c.showMoreDay=true; c.show(this);"/>
 </s:form>
 
@@ -96,4 +97,63 @@
 <%--</form>--%>
 
 </body>
+<script type="text/javascript">
+    function createXMLHttpRequest() {
+        try {
+            return new XMLHttpRequest();
+        } catch (e) {
+            try {
+                return new ActiveXObject("Msxml2.HTTP");
+            } catch (e) {
+                try {
+                    return new ActiveXObject("Microsoft.HTTP");
+                } catch (e) {
+                    throw e;
+                }
+            }
+        }
+    }
+    //根据部门选中状态发起职务查询的请求
+    function showPost(obj) {
+        //获得部门选中id
+        var departId = obj.value;
+        //1.创建ajax请求对象
+        var httpRequest = createXMLHttpRequest();
+
+        var url = "${pageContext.request.contextPath}/findPost.action";
+        //2.打开一个url连接对象
+        httpRequest.open("POST",url,true)
+        //3.POST请求设置请求头
+        httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        //4.发起请求 设置请求参数 部门id
+        httpRequest.send("departId="+departId);
+        //5.设置请求响应的监听器
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 &&httpRequest.status==200){
+                //6,成功响应 处理响应结果
+                //6.1将响应数据转换为json格式解析
+                var jsonData = eval("("+httpRequest.responseText+")");
+                //6.2 根据组件id获得职务下拉列表对象
+                var postSelect = document.getElementById("post");
+                //6.3 添加请选择
+                postSelect.innerHTML="<option value='-1'>---请选择---</option>";
+                //6.4 遍历json数据集合,添加下拉选项
+                for (var i=0; i<jsonData.length;i++){
+                    var id = jsonData[i].postId;//职务id
+                    var pname = jsonData[i].postName;
+//                    alert(id + pname)
+                    postSelect.innerHTML +="<option value='"+id+"'>"+pname+"</option>";
+
+                }
+
+
+            }
+
+        }
+
+
+
+
+    }
+</script>
 </html>

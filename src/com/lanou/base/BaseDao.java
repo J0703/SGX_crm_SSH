@@ -25,5 +25,8 @@ public interface BaseDao<T> {
     //保存并更新
     void saveOrUpdate(T t);
 
+    //条件查询
+    List<T> findAll(String condition, Object... params);
+
 
 }

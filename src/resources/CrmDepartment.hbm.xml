@@ -12,5 +12,9 @@
         <property name="depName">
             <column name="depName" sql-type="varchar(50)" length="50" />
         </property>
+        <set name="posts" lazy="false">
+            <key column="depId"></key>
+            <one-to-many class="com.lanou.domain.CrmPost"/>
+        </set>
     </class>
 </hibernate-mapping>
