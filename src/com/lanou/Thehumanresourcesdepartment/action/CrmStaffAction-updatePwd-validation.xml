@@ -1,0 +1,26 @@
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.3//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+    <field name="oldPassword">
+        <field-validator type="requiredstring">
+            <message>原始密码不能为空</message>
+        </field-validator>
+    </field>
+    <field name="newPassword">
+        <field-validator type="requiredstring">
+            <message>新密码不能为空</message>
+        </field-validator>
+    </field>
+
+    <field name="reNewPassword">
+        <field-validator type="requiredstring">
+            <message>确认密码不能为空</message>
+        </field-validator>
+        <field-validator type="fieldexpression">
+            <param name="expression"><![CDATA[newPassword == reNewPassword]]></param>
+            <message>确认密码和新密码不一致</message>
+        </field-validator>
+    </field>
+    
+</validators>

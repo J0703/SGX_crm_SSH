@@ -4,6 +4,15 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <!--过滤器 靠 要放到最上面 才好使 真坑-->
+    <filter>
+        <filter-name>Filter</filter-name>
+        <filter-class>com.lanou.filter.Filter</filter-class>
+        <init-param>
+            <param-name>admin</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
     <!--配置spring-->
     <!--引入spring配置文件-->
     <context-param>
@@ -18,8 +27,6 @@
 
 
 
-
-
     <!--struts2-->
     <filter>
         <filter-name>Struts2</filter-name>
@@ -29,6 +36,8 @@
         <filter-name>Struts2</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+
 
 
 </web-app>

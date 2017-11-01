@@ -44,11 +44,12 @@
 	    <td width="80px">部门：</td>
 	    <td width="200px">
 
+			<%--我把this去拉 要不然点击高级查询第一次查询不出来 --%>
 			<s:select list="#session.crmDepartments"
 					  name="crmPost.crmDepartment.depId"
 					  listKey="depId" listValue="depName"
 					  headerKey="" headerValue="--请选择部门--"
-					  onchange="showPost(this)"
+					  onchange="showPost()"
 			>
 			</s:select>
 	    	<%--<select id="depart" name="crmPost.crmDepartment.depId" onchange="showPost(this)">--%>
@@ -166,6 +167,7 @@
 
 <script type="text/javascript">
     function condition() {
+
         document.getElementById("conditionFormId").submit();
 
     }
@@ -207,7 +209,7 @@
                 //6.2 根据组件id获得职务下拉列表对象
                 var postSelect = document.getElementById("post");
                 //6.3 添加请选择
-                postSelect.innerHTML="<option value='-1'>---请选择---</option>";
+                postSelect.innerHTML="<option >---请选择---</option>";
                 //6.4 遍历json数据集合,添加下拉选项
                 for (var i=0; i<jsonData.length;i++){
                     var id = jsonData[i].postId;//职务id
@@ -215,7 +217,9 @@
 //                    alert(id + pname)
                     postSelect.innerHTML +="<option value='"+id+"'>"+pname+"</option>";
 
+
                 }
+
 
 
             }
@@ -223,7 +227,10 @@
         }
 
 
+    function refresh() {
+            window.location.reload();
 
+    }
 
     }
 </script>

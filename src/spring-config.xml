@@ -57,35 +57,48 @@
     <!--5.配置spring aop-->
     <aop:config>
         <!--配置切入点-->
-        <aop:pointcut id="pointcut" expression="execution(* com.lanou.service.Impl.*.*(..))"/>
+        <aop:pointcut id="pointcut" expression="execution(* com.lanou.*.service.Impl.*.*(..))"/>
         <!--配制通知-->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
     </aop:config>
 
 
     <!--配置dao层-->
-    <bean id="crmStaffDao" class="com.lanou.dao.Impl.CrmStaffDaoImpl">
+    <bean id="crmStaffDao" class="com.lanou.Thehumanresourcesdepartment.dao.Impl.CrmStaffDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="crmStaffService" class="com.lanou.service.Impl.CrmStaffServiceImpl">
+    <bean id="crmStaffService" class="com.lanou.Thehumanresourcesdepartment.service.Impl.CrmStaffServiceImpl">
         <property name="crmStaffDao" ref="crmStaffDao"/>
     </bean>
 
 
-    <bean id="crmPostDao" class="com.lanou.dao.Impl.CrmPostDaoImpl">
+    <bean id="crmPostDao" class="com.lanou.Thehumanresourcesdepartment.dao.Impl.CrmPostDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="crmPostService" class="com.lanou.service.Impl.CrmPostServiceImpl">
+    <bean id="crmPostService" class="com.lanou.Thehumanresourcesdepartment.service.Impl.CrmPostServiceImpl">
         <property name="crmPostDao" ref="crmPostDao"/>
     </bean>
 
 
-    <bean id="crmDepartmentDao" class="com.lanou.dao.Impl.CrmDepartmentDaoImpl">
+    <bean id="crmDepartmentDao" class="com.lanou.Thehumanresourcesdepartment.dao.Impl.CrmDepartmentDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="crmDepartmentService" class="com.lanou.service.Impl.CrmDepartmentServiceImpl">
+    <bean id="crmDepartmentService" class="com.lanou.Thehumanresourcesdepartment.service.Impl.CrmDepartmentServiceImpl">
          <property name="crmDepartmentDao" ref="crmDepartmentDao"/>
     </bean>
 
+    <bean id="crmCourseTypeDao" class="com.lanou.Actuarialoriented.dao.Impl.CrmCourseTypeDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="crmCourseTypeService" class="com.lanou.Actuarialoriented.service.Impl.CrmCourseTypeServiceImpl">
+        <property name="crmCourseTypeDao" ref="crmCourseTypeDao"/>
+     </bean>
+
+    <bean id="crmClassesDao" class="com.lanou.Actuarialoriented.dao.Impl.CrmClassesDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="crmClassesService" class="com.lanou.Actuarialoriented.service.Impl.CrmClassesServiceImpl">
+        <property name="crmClassesDao" ref="crmClassesDao"/>
+    </bean>
 
 </beans>

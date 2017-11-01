@@ -8,7 +8,26 @@
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.objectFactory" value="spring"/>
 
+
+
+
   <package name="staff" extends="json-default">
+      <!--登录拦截器-->
+      <interceptors>
+          <interceptor name="loginCheck" class="com.lanou.interceptor.LoginInterceptor"/>
+          <interceptor-stack name="myInterceptors">
+              <!--默认的-->
+              <interceptor-ref name="defaultStack"/>
+              <!--自定义的登录拦截器-->
+              <interceptor-ref name="loginCheck">
+                  <param name="excludeMethods">login</param>
+              </interceptor-ref>
+          </interceptor-stack>
+      </interceptors>
+      <default-interceptor-ref name="myInterceptors"/>
+      <global-results>
+          <result name="login">/pages/login.jsp</result>
+      </global-results>
      <!--登录-->
       <action name="homeAction" class="crmStaffAction">
           <result>/pages/frame.jsp</result>
@@ -18,6 +37,9 @@
           <result name="login">/pages/login.jsp</result>
           <result name="success" type="redirectAction">homeAction</result>
       </action>
+
+
+
 
       <!--重新登录-->
       <action name="staffAction_logout" class="crmStaffAction" method="staffAction_logout">
@@ -49,25 +71,73 @@
 
       <!--二级联动-->
       <action name="findStaff" class="crmStaffAction" method="findStaff">
-          <result name="success"  >/pages/staff/listStaff.jsp</result>
+          <result name="success" >/pages/staff/listStaff.jsp</result>
       </action>
       <action name="findPost" class="crmStaffAction" method="findPost">
           <result name="success" type="json">
               <param name="root">posts</param>
           </result>
       </action>
+
+      <!-- 修改密码-->
+      <action name="updatePwd" class="crmStaffAction" method="updatePwd">
+          <result name="updatePwd">/pages/staff/updPwd.jsp</result>
+          <result name="input">/pages/staff/updPwd.jsp</result>
+          <result name="success" type="redirectAction">staffAction_logout</result>
+      </action>
+
+
   </package>
   <!--职务-->
     <package name="post" extends="json-default">
-        <action name="listPost" class="crmPostAction" method="listPost">
+        <!--没有分页的查询所有-->
+        <!--<action name="listPost" class="crmPostAction" method="listPost">-->
+            <!--<result name="success">/pages/post/listPost.jsp</result>-->
+        <!--</action>-->
+
+        <action name="AddPost" class="crmPostAction" method="AddPost">
+            <result name="success">/pages/post/addOrEditPost.jsp</result>
+        </action>
+        <action name="EditPost" class="crmPostAction" method="JumpPost">
+            <result name="success">/pages/post/addOrEditPost.jsp</result>
+        </action>
+
+        <action name="AddorEditPost" class="crmPostAction" method="AddorEditPost">
+            <result name="success" type="redirectAction">findAllP</result>
+        </action>
+
+        <!--post分页-->
+        <action name="findAllP" class="crmPostAction" method="findAllP">
             <result name="success">/pages/post/listPost.jsp</result>
         </action>
+
     </package>
 <!--部门-->
     <package name="department" extends="json-default">
         <action name="listDepartment" class="crmDepartmentAction" method="listDepartment">
             <result name="success">/pages/department/listDepartment.jsp</result>
         </action>
-    </package>
 
+        <action name="addOrEditDepartment" class="crmDepartmentAction" method="BeforeaddOrEditDepartment">
+            <result name="success">/pages/department/addOrEditDepartment.jsp</result>
+        </action>
+        <action name="addDepartment" class="crmDepartmentAction" method="addDepartment">
+            <result name="success">/pages/department/addOrEditDepartment.jsp</result>
+        </action>
+        <action name="saveDepartment" class="crmDepartmentAction" method="saveDepartment">
+            <result name="success" type="redirectAction">listDepartment</result>
+        </action>
+    </package>
+<!--课程类别 分页+高级查询-->
+    <package name="courseType" extends="json-default">
+        <action name="courseTypeAction_findAll" class="crmCourseTypeAction" method="listCourse">
+            <result name="success">/pages/coursetype/listCourse.jsp</result>
+        </action>
+    </package>
+    <!-- 班级管理 分页查询-->
+    <package name="Class" extends="json-default">
+        <action name="listClass" class="crmClassesAction" method="listClass">
+            <result name="success">/pages/classesm/listClass.jsp</result>
+        </action>
+    </package>
 </struts>

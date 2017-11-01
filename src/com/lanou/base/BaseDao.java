@@ -26,7 +26,10 @@ public interface BaseDao<T> {
     void saveOrUpdate(T t);
 
     //条件查询
-    List<T> findAll(String condition, Object... params);
+    List<T> findAll(String condition, Object[] params);
 
-
+    //分页+高级查询
+    List<T> findAll(String condition, Object[] params, int startIndex, int pageSize);
+    //总记录数
+    int getTotalRecord(String condition, Object[] params);
 }

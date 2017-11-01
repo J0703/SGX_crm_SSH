@@ -51,6 +51,7 @@ FONT-SIZE: 12px; COLOR: #4b4b4b; LINE-HEIGHT: 18px; TEXT-DECORATION: none
 						<%--错误提示--%>
 							<s:fielderror/>
 							<s:actionerror/>
+
 					</font> 
 					<br/>
 

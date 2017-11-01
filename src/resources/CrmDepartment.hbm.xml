@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.lanou.domain.CrmDepartment" table="crm_department" schema="crm">
+    <class name="com.lanou.Thehumanresourcesdepartment.domain.CrmDepartment" table="crm_department" schema="crm">
         <id name="depId">
             <column name="depId" sql-type="varchar(255)"/>
             <generator class="uuid"/>
@@ -12,9 +12,9 @@
         <property name="depName">
             <column name="depName" sql-type="varchar(50)" length="50" />
         </property>
-        <set name="posts" lazy="false">
+        <set name="posts" lazy="false" inverse="true">
             <key column="depId"></key>
-            <one-to-many class="com.lanou.domain.CrmPost"/>
+            <one-to-many class="com.lanou.Thehumanresourcesdepartment.domain.CrmPost"/>
         </set>
     </class>
 </hibernate-mapping>

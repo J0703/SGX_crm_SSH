@@ -25,7 +25,7 @@
    
     <td width="57%"align="right">
     	<%--添加部门 --%>
-       <a href="${pageContext.request.contextPath}/pages/department/addOrEditDepartment.jsp">
+       <a href="${pageContext.request.contextPath}/addDepartment.action">
        		<img src="${pageContext.request.contextPath}/images/button/tianjia.gif" />
        </a>
       
@@ -75,18 +75,18 @@
 
 
 
-<table border="0" cellspacing="0" cellpadding="0" align="center">
-  <tr>
-    <td align="right">
-    	<span>第1/3页</span>
-        <span>
-        	<a href="#">[首页]</a>&nbsp;&nbsp;
-            <a href="#">[上一页]</a>&nbsp;&nbsp;
-            <a href="#">[下一页]</a>&nbsp;&nbsp;
-            <a href="#">[尾页]</a>
-        </span>
-    </td>
-  </tr>
-</table>
+<%--<table border="0" cellspacing="0" cellpadding="0" align="center">--%>
+  <%--<tr>--%>
+    <%--<td align="right">--%>
+    	<%--<span>第1/3页</span>--%>
+        <%--<span>--%>
+        	<%--<a href="#">[首页]</a>&nbsp;&nbsp;--%>
+            <%--<a href="#">[上一页]</a>&nbsp;&nbsp;--%>
+            <%--<a href="#">[下一页]</a>&nbsp;&nbsp;--%>
+            <%--<a href="#">[尾页]</a>--%>
+        <%--</span>--%>
+    <%--</td>--%>
+  <%--</tr>--%>
+<%--</table>--%>
 </body>
 </html>

@@ -42,7 +42,9 @@
 	<s:password name="loginPwd" label="密码"  showPassword="true"/>
 	<s:radio name="gender" list="%{#{'man':'男','woman':'女'}}" />
 	<s:select list="#session.crmDepartments"  onchange="showPost(this)" name="crmPost.crmDepartment.depId" listKey="depId" listValue="depName" label="所属部门"/>
-	<s:select list="#session.crmPosts" id="post" name="crmPost.postId" listKey="%{postId}" listValue="%{postName}" label="职务"/>
+<%--回显问题 职务下拉列表--%>
+	<%--不用 #session.crmPosts--%>
+	<s:select list="crmPost.crmDepartment.posts" id="post" name="crmPost.postId" listKey="%{postId}" listValue="%{postName}" label="职务"/>
      <s:textfield label="入职时间" name="onDutyDate" readonly="true" onfocus="c.showMoreDay=true; c.show(this);"/>
 </s:form>
 
