@@ -95,6 +95,9 @@ public class CrmPostAction extends ActionSupport implements ModelDriven<CrmPost>
     }
 
 
+
+
+
     @Override
     public CrmPost getModel() {
         crmPost = new CrmPost();
